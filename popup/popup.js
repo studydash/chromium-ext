@@ -5,7 +5,7 @@ if (sendMessageId) {
             chrome.tabs.sendMessage(
                 tabs[0].id,
                 {
-                    url: chrome.extension.getURL("images/books2.png"),
+                    url: chrome.runtime.getURL("images/books2.png"),
                     imageDivId: `${guidGenerator()}`,
                     tabId: tabs[0].id
                 },
@@ -15,9 +15,9 @@ if (sendMessageId) {
             )
             function guidGenerator() {
                 const S4 = () => {
-                    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+                    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
                 }
-                return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+                return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4())
             }
         })
     }
