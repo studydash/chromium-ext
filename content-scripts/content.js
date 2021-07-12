@@ -22,6 +22,8 @@ if (targetNode) {
         if (m?.[1]) {
           console.log('\t>> This is a GitHub issue page:', m[1], m[2], m[3])
 
+          attachCustomHandlers()
+
           // console.log('>> discussions_bucket', document.getElementById('discussion_bucket'))
           // console.log('>> mutationsList:', mutationsList)
           renderCustom(m[3])
@@ -29,6 +31,26 @@ if (targetNode) {
       }
     })
   observer.observe(targetNode, config)
+}
+
+function attachCustomHandlers() {
+  // Get the textarea element of the issue editor
+  const elEditor = document.getElementsByName('issue[body]')?.[0]
+  if (elEditor) {
+    elEditor.addEventListener('keydown', e => {
+      // const selectedText = window.getSelection()?.toString() ?? ''
+      if ((e.ctrlKey && e.key === 'k')) {
+        // elEditorView.setRangeText(`[${selectedText}](url)`)
+        // elEditorView.setSelectionRange(elEditorView.selectionStart + selectedText.length + 3,
+        //   elEditorView.selectionStart + selectedText.length + 6)
+        // e.preventDefault()
+      } else if (e.ctrlKey && e.key === 's') {
+        // saveArticle(true)
+        console.log('\t>> trigger saveArticle()!')
+        e.preventDefault()
+      }
+    })
+  }
 }
 
 // Write code that scans the DOM and replace all innerHTML of `<div class="edit-comment-hide"></div>` with
@@ -43,7 +65,6 @@ function renderCustom(cardNo) {
   // Get the textarea element of the issue editor
   const elEditor = document.getElementsByName('issue[body]')[0]
   console.log('\t>> elEditor.innerHTML before:', JSON.stringify(elEditor.innerHTML))
-
   let body = elEditor.innerHTML
 
   body = body.replaceAll('- [ ]', '<input type="checkbox">&nbsp;')
@@ -62,7 +83,7 @@ function renderCustom(cardNo) {
   // Replace all links
   body = body.replaceAll(reLinks, "<a target='_blank' href='$2'>$1</a>")
   
-  console.log('>> issue body after:', JSON.stringify(body))
+  console.log('\t>> issue body after:', JSON.stringify(body))
 
   document.getElementsByClassName('edit-comment-hide')[0].innerHTML = `<div style="padding: 20px">${body}</div>`
 }
