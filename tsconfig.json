@@ -7,7 +7,8 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "outFile": "content-scripts/content.js",
-    "sourceMap": true
+    "sourceMap": true,
+    "strict": true
   },
   "include": ["content-scripts/content.ts"]
   }

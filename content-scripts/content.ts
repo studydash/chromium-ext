@@ -108,8 +108,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       }`
   document.head.prepend(styleAdd)
   
-  document.getElementById(request.imageDivId).onclick = () => {
-    document.getElementById(request.imageDivId).remove()
+  document.getElementById(request.imageDivId)!.onclick = () => {
+    document.getElementById(request.imageDivId)!.remove()
   }
   sendResponse({ fromcontent: "This message is from content.js" })
 })
