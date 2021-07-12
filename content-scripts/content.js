@@ -21,9 +21,10 @@ if (targetNode) {
         const m = window.location.pathname.match(/^\/(.*?)\/(.*?)\/issues\/(\d*)$/)
         if (m?.[1]) {
           console.log('\t>> This is a GitHub issue page:', m[1], m[2], m[3])
+
           // console.log('>> discussions_bucket', document.getElementById('discussion_bucket'))
           // console.log('>> mutationsList:', mutationsList)
-          // renderCustom(m[3])
+          renderCustom(m[3])
         }
       }
     })
@@ -39,37 +40,31 @@ function renderCustom(cardNo) {
   console.log('>> Calling renderCustom()', cardNo)
   console.log("\t>> document.getElementsByClassName('edit-comment-hide')", document.getElementsByClassName('edit-comment-hide'))
 
-  if (document.getElementsByClassName('edit-comment-hide')[0]) {
-    const url = `https://api.github.com/repos${window.location.pathname}`
-    console.log('>> fetching:', url)
-    const req = fetch(url).then(rs => {
-      rs.json().then(dom =>{
-        console.log('>> issue body before:', JSON.stringify(dom.body))
+  // Get the textarea element of the issue editor
+  const elEditor = document.getElementsByName('issue[body]')[0]
+  console.log('\t>> elEditor.innerHTML before:', JSON.stringify(elEditor.innerHTML))
 
-        let body = dom.body
+  let body = elEditor.innerHTML
 
-        body = body.replaceAll('- [ ]', '<input type="checkbox">&nbsp;')
-        body = body.replaceAll('[ ]', '<input type="checkbox">&nbsp;')
+  body = body.replaceAll('- [ ]', '<input type="checkbox">&nbsp;')
+  body = body.replaceAll('[ ]', '<input type="checkbox">&nbsp;')
 
-        // Perform markdown formatting
-        // console.log('\t >>body:', body)
-        body = body.replaceAll(/### .*?\r\n/g, m => `<h3>${m.slice(4, -2)}</h3><br />`)
-        // body = body.replaceAll(/_.*_/g, '<em>$&</em>') // Almost works but doesn't eliminate the underscores
-        body = body.replaceAll(/_.*?_/g, m => `<i>${m.slice(1, -1)}</i>`)
-        body = body.replaceAll(/\*\*.*?\*\*/g, m => `<b>${m.slice(2, -2)}</b>`) // Use RegEx-- but need to escape!
-        body = body.replaceAll(/\n/g, '<br />')
-      
-        body = body.replace('\n', '<br />')
+  // Perform markdown formatting
+  // console.log('\t >>body:', body)
+  body = body.replaceAll(/### .*?\n/g, m => `<h3>${m.slice(4, -2)}</h3><br />`)
+  // body = body.replaceAll(/_.*_/g, '<em>$&</em>') // Almost works but doesn't eliminate the underscores
+  body = body.replaceAll(/_.*?_/g, m => `<i>${m.slice(1, -1)}</i>`)
+  body = body.replaceAll(/\*\*.*?\*\*/g, m => `<b>${m.slice(2, -2)}</b>`) // Use RegEx-- but need to escape!
+  body = body.replaceAll(/\n/g, '<br />')
 
-        // Replace all links
-        body = body.replaceAll(reLinks, "<a target='_blank' href='$2'>$1</a>")
-        
-        console.log('>> issue body after:', JSON.stringify(body))
+  body = body.replace('\n', '<br />')
 
-        document.getElementsByClassName('edit-comment-hide')[0].innerHTML = `<div style="padding: 20px">${body}</div>`
-      })
-    })
-  }
+  // Replace all links
+  body = body.replaceAll(reLinks, "<a target='_blank' href='$2'>$1</a>")
+  
+  console.log('>> issue body after:', JSON.stringify(body))
+
+  document.getElementsByClassName('edit-comment-hide')[0].innerHTML = `<div style="padding: 20px">${body}</div>`
 }
 
 // This is code from the quickstart tutorial. Not part of my `GitHub Enhancer` extension
