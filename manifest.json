@@ -1,6 +1,6 @@
 {
   "name": "StudyDash GitHub Enhancer",
-  "version": "0.0.0.7",
+  "version": "0.0.0.10",
   "manifest_version": 3,
   "description": "A Chromium extension that adds extra features to the GitHub web GUI.",
   "icons": {
@@ -21,7 +21,7 @@
   "content_scripts": [
       {
           "matches": [
-            "https://github.com/*/issues/*"
+            "https://github.com/*"
           ],
           "js": ["content-scripts/content.js"]
       }
