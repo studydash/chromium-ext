@@ -1,4 +1,4 @@
-console.log('>> Initial load: GitHub Issues page detected! Run ext!', window.location.pathname)
+console.log('>> Initial load: GitHub Issues page detected! Run ext', window.location.pathname)
 
 // Select the node that will be observed for mutations
 const targetNode = document.getElementById('js-repo-pjax-container')
@@ -7,7 +7,7 @@ const targetNode = document.getElementById('js-repo-pjax-container')
 const config = { attributes: false, childList: true, subtree: true }
 
 // Callback function to execute when mutations are observed
-let currentPath
+let currentPath: string
 
 // If the targetNode is detected on this page, start observing it
 if (targetNode) {
@@ -26,7 +26,7 @@ if (targetNode) {
 
           // console.log('>> discussions_bucket', document.getElementById('discussion_bucket'))
           // console.log('>> mutationsList:', mutationsList)
-          renderCustom(m[3])
+          renderCustom(Number(m[3]))
         }
       }
     })
@@ -58,7 +58,7 @@ function attachCustomHandlers() {
 
 const reLinks = /\[(.*?)\]\((.*?)\)/g
 
-function renderCustom(cardNo) {
+function renderCustom(cardNo: number) {
   console.log('>> Calling renderCustom()', cardNo)
   console.log("\t>> document.getElementsByClassName('edit-comment-hide')", document.getElementsByClassName('edit-comment-hide'))
 
@@ -90,6 +90,7 @@ function renderCustom(cardNo) {
 
 // This is code from the quickstart tutorial. Not part of my `GitHub Enhancer` extension
 // https://docs.microsoft.com/en-us/microsoft-edge/extensions-chromium/getting-started/part2-content-scripts
+// @ts-ignore
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   console.log(">> Running styledash extension!")

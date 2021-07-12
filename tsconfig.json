@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "rootDir": "./",
+    "module": "system",
+    "target": "ESNext",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "outFile": "content-scripts/content.js",
+    "sourceMap": true
+  },
+  "include": ["content-scripts/content.ts"]
+  }
