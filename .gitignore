@@ -4,3 +4,4 @@
 # specific files
 /content-scripts/content.js.map
 /content-scripts/content.js
+/popup/render.js

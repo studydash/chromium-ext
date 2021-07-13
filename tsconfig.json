@@ -1,14 +1,20 @@
 {
   "compilerOptions": {
     "rootDir": "./",
-    "module": "system",
+    "module": "ESNext",
     "target": "ESNext",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outFile": "content-scripts/content.js",
-    "sourceMap": true,
+    // "outFile": "content-scripts/content.js",
+    "sourceMap": false,
     "strict": true
   },
-  "include": ["content-scripts/content.ts"]
+  "include": [
+    "content-scripts/content.ts",
+    "popup/render.ts"
+  ],
+  "globals": {
+    "chrome": "readonly"
   }
+}

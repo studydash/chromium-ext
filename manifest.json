@@ -23,12 +23,16 @@
           "matches": [
             "https://github.com/*"
           ],
-          "js": ["content-scripts/content.js"]
+          "js": [
+            "content-scripts/content.js",
+            "content-scripts/renderman.js",
+            "content-scripts/ghBridge.js"
+          ]
       }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["images/*"],
+      "resources": ["images/*", "popup/*"],
       "matches": [ "https://github.com/*" ]
     }
   ]
