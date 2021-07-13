@@ -1,8 +1,8 @@
 function attachCustomHandlers() {
-  console.log('>> fire: attachCustomHandlers!')
   // Get the textarea element of the issue editor
   let elEditor = document.getElementsByName('issue[body]')?.[0] as HTMLTextAreaElement
   if (elEditor) {
+    console.log('>> elEditor detected! Attach keydown listener')
     elEditor.addEventListener('keydown', e => {
       // const selectedText = window.getSelection()?.toString() ?? ''
       if ((e.ctrlKey && e.key === 'k')) {
@@ -12,7 +12,7 @@ function attachCustomHandlers() {
         // e.preventDefault()
       } else if (e.ctrlKey && e.key === 's') {
         console.log('\t>> trigger saveArticle()', JSON.stringify(elEditor.value))
-        // renderWindow?.postMessage(JSON.stringify(elEditor.value), '*')
+        ;(window as any).populatePreview(elEditor.value)
         e.preventDefault()
       }
     })

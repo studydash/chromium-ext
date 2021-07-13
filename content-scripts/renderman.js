@@ -21,3 +21,8 @@ window.onunload = () => {
   console.log('>> closing children window if open.')
   renderWindow?.close()
 }
+
+function populatePreview(content) {
+  console.log(">> Populate the preview div in Renderman popup!")
+  renderWindow?.postMessage(JSON.stringify(content), '*')
+}
