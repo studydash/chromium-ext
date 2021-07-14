@@ -21,18 +21,21 @@ if (targetNode) {
         const m = window.location.pathname.match(/^\/(.*?)\/(.*?)\/issues\/(\d*)$/)
         if (m?.[1]) {
           console.log('\t>> This is a GitHub issue page:', m[1], m[2], m[3])
+          
+          const elEditor = document.getElementsByName('issue[body]')?.[0]
+          populateIssueDiv(RenderCustom(elEditor.innerHTML))
 
-          openRenderMan()
-
-          attachCustomHandlers()
-
-          // console.log('>> discussions_bucket', document.getElementById('discussion_bucket'))
-          // console.log('>> mutationsList:', mutationsList)
-          renderCustom(Number(m[3]))
+          // Add custom handlers to the editor textarea
+          AttachCustomHandlers()
         }
       }
     })
   observer.observe(targetNode, config)
+}
+
+function populateIssueDiv(renderedContent) {
+  document.getElementsByClassName('edit-comment-hide')[0].innerHTML =
+    `<div style="padding: 20px">${renderedContent}</div>`
 }
 
 // This is code from the quickstart tutorial. Not part of my `GitHub Enhancer` extension
