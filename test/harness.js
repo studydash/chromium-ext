@@ -6,3 +6,8 @@ function PopulatePreview(renderedContent) {
 }
 
 AttachCustomHandlers()
+
+/////////////////////////////////////////////////////
+// Auto-load; use only in dev
+const elEditor = document.getElementsByName('issue[body]')?.[0]
+PopulatePreview(RenderIntoHtml(elEditor.value))

@@ -23,7 +23,7 @@ if (targetNode) {
           console.log('\t>> This is a GitHub issue page:', m[1], m[2], m[3])
           
           const elEditor = document.getElementsByName('issue[body]')?.[0]
-          populateIssueDiv(RenderCustom(elEditor.innerHTML))
+          populateIssueDiv(RenderIntoHtml(elEditor.innerHTML))
 
           // Add custom handlers to the editor textarea
           AttachCustomHandlers()

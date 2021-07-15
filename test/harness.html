@@ -10,31 +10,88 @@
         background: #0d1117;
       }
 
-        .ghText {
-            font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
-            font-size: 14px;
-            color: #cecece;
-            background: #070a10;
-            padding: 15px;
-            border-radius: 5px;
-            border: #4388ef solid 1px;
-        }
+      .ghText {
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+        font-size: 14px;
+        color: #cecece;
+        background: #070a10;
+        padding: 0px 15px 15px 15px;
+        border-radius: 5px;
+        border: #4388ef solid 1px;
+        min-height: 500px; 
+        width: 700px;
+        box-sizing: border-box;
+        line-height: 150%;
+        margin-top: 0px;
+      }
+
+      .customCb {
+        display: inline-flex;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .customCb > input {
+        height: 12px;
+        width: 12px;
+        /* -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none; */
+        appearance: none;
+        border: 1px solid #a7a7a7;
+        border-radius: 1px;
+        background-color: #3b3b3b;
+        cursor: pointer;
+        margin: 3px;
+      }
+
+      .customCb > input:checked {
+        border: 1px solid #a7a7a7;
+        background-color: #a7a7a7;
+        color: #3b3b3b;
+      }
+
+      /* .customCb > input:active {
+        border: 2px solid #34495E;
+      } */
+
+      .customCb > input:hover {
+        border: 1px solid white;
+      }
+
+      h3 {
+        font-size: 17px;
+        font-weight: 600;
+        line-height: 1.25;
+        margin-bottom: 0;
+        /* margin-top: 24px; */
+      }
+
+      #container {
+        display: flex; 
+        margin: 0;
+        justify-content: center;
+      }
     </style>
   </head>
-  <body style="margin: 50px;">
+  <body style="margin: 10px;">
 
-    <div style="margin: 0; display: flex; align-items: center; justify-content: center;">
-      <textarea name="issue[body]" class="ghText" style="height: 500px; width: 700px; margin-right: 50px;">
+    <div id="container">
+      <textarea name="issue[body]" class="ghText" style="margin-right: 50px; padding-top: 15px;">
 ### Using this card to test new extension features.
 - [ ] [ ] Render double checkboxes
-- [ ] aaa
-- [ ] bbb
+- [ ] Unchecked item
+- [x] Checked item
 
-qwerqwer
-bbbb
-ccc
-dddllll</textarea>
-      <div class="ghText" id='previewPane' style="height: 500px; width: 700px;">
+_Testing italics_
+
+::gif/picard::
+::gif/leo::
+::https://youtu.be/CAibrKvKK58::
+::https://www.youtube.com/watch?v=vSkyr_tesmg::
+::https://www.youtube.com/watch/fWNaR-rxAic::</textarea>
+
+      <div class="ghText" id='previewPane'>
         preview area here
       </div>
     </div>
@@ -43,3 +100,12 @@ dddllll</textarea>
   <script src="../content-scripts/content.js"></script>
   <script src="harness.js"></script>
 </html>
+
+<!--
+::gif/picard::
+::gif/leo::
+
+::https://youtu.be/CAibrKvKK58::
+::https://www.youtube.com/watch?v=SR9F-fKEP10::
+::https://www.youtube.com/watch/fWNaR-rxAic::
+-->

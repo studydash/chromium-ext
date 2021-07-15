@@ -12,7 +12,7 @@ function AttachCustomHandlers() {
         // e.preventDefault()
       } else if (e.ctrlKey && e.key === 's') {
         console.log('\t>> trigger saveArticle()', JSON.stringify(elEditor.value))
-        const renderedContent = RenderCustom(elEditor.value)
+        const renderedContent = RenderIntoHtml(elEditor.value)
         ;(window as any).PopulatePreview(renderedContent)
         e.preventDefault()
       }
@@ -22,29 +22,50 @@ function AttachCustomHandlers() {
 
 // Write code that scans the DOM and replace all innerHTML of `<div class="edit-comment-hide"></div>` with
 // our own custom rendered content.
-
+const reImgs = /\!\[(.*?)\]\((.*?)\)/g
 const reLinks = /\[(.*?)\]\((.*?)\)/g
 
-function RenderCustom(content: string): string {
-  console.log('\t>> Calling renderCustom(string)')
-  let body = content
+// Accepts raw text and renders into markdown
+function renderIntoMarkdown(contentMarkdown: string): string {
+  let markdown = contentMarkdown
+    .replaceAll('::gif/picard::', 
+      '![image](https://media.tenor.com/images/cf284bb8e2b9e68ee642fc8a4801a670/tenor.gif)')
+    .replaceAll('::gif/leo::', 
+      '![image](https://thumbs.gfycat.com/CarefreeFlamboyantJackal-size_restricted.gif)')
+    .replaceAll(/\:\:.*?(?:(?:be\/)|(?:v=)|(?:watch\/))(.*)\:\:/g,
+      '<iframe width="533px" height="300px" src="https://www.youtube.com/embed/$1" \
+      frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" \
+      allowfullscreen></iframe>')
 
-  body = body.replaceAll('- [ ]', '<input type="checkbox">')
-  body = body.replaceAll('[ ]', '<input type="checkbox">')
+  return markdown
+}
+
+
+function RenderIntoHtml(contentRaw: string): string {
+  console.log('\t>> Calling RenderIntoHtml(string)')
+  let html = renderIntoMarkdown(contentRaw)
+
+  html = 
+    html.replaceAll('- [ ]', '<label class="customCb"><input type="checkbox" /></label>')
+      .replaceAll('[ ]', '<label class="customCb"><input type="checkbox" /></label>')
+      .replaceAll('- [x]', '<label class="customCb"><input type="checkbox" checked /></label>')
 
   // Perform markdown formatting
   // console.log('\t >>body:', body)
-  body = body.replaceAll(/### .*?\n/g, m => `<h3>${m.slice(4, -2)}</h3>`)
-  // body = body.replaceAll(/_.*_/g, '<em>$&</em>') // Almost works but doesn't eliminate the underscores
-  body = body.replaceAll(/_.*?_/g, m => `<i>${m.slice(1, -1)}</i>`)
-  body = body.replaceAll(/\*\*.*?\*\*/g, m => `<b>${m.slice(2, -2)}</b>`) // Use RegEx-- but need to escape!
-  body = body.replaceAll(/\n/g, '<br />')
+  html = 
+    html.replaceAll(/### .*?\n/g, m => `<h3>${m.slice(4, -2)}</h3><br />`)
+      .replaceAll(/_(.*)_/g, '<em>$1</em>') // Almost works but doesn't eliminate the underscores
+      .replaceAll(/_.*?_/g, m => `<i>${m.slice(1, -1)}</i>`)
+      .replaceAll(/\*\*.*?\*\*/g, m => `<b>${m.slice(2, -2)}</b>`) // Use RegEx-- but need to escape!
+      .replaceAll(/\n/g, '<br />')
 
-  body = body.replace('\n', '<br />')
+  html = html.replace('\n', '<br />')
 
-  // Replace all links
-  body = body.replaceAll(reLinks, "<a target='_blank' href='$2'>$1</a>")
+  // Replace all images and links
+  html = 
+    html.replaceAll(reImgs, "<img src='$2' alt='$1' />")
+      .replaceAll(reLinks, "<a target='_blank' href='$2'>$1</a>")
   
-  console.log('\t>> issue body after:', JSON.stringify(body))
-  return body
+  console.log('\t>> issue body after:', JSON.stringify(html))
+  return html
 }
